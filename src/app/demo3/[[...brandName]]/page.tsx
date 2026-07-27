@@ -20,6 +20,8 @@ import {
     MapPin,
     Sun,
     Moon,
+    Menu,
+    X,
 } from "lucide-react";
 
 // --- Module Configuration Patterns ---
@@ -66,6 +68,7 @@ export default function Demo2Page() {
     const BUSINESS_NAME = formatBrandName(brandSlug);
 
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     // State for FAQ toggles
     const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -339,14 +342,14 @@ export default function Demo2Page() {
 
             {/* Sticky Luxury Header Navigation */}
             <div className="sticky top-4 z-50 w-full px-4 sm:px-8 md:px-16 pointer-events-none">
-                <header className={`max-w-7xl mx-auto flex items-center justify-between backdrop-blur-md px-6 py-4 rounded-full border shadow-md pointer-events-auto transition-colors duration-300 ${
+                <header className={`max-w-7xl mx-auto flex items-center justify-between backdrop-blur-md px-4 sm:px-6 py-3.5 rounded-full border shadow-md pointer-events-auto transition-colors duration-300 ${
                     isDarkMode ? 'bg-slate-900/80 border-slate-800 text-white' : 'bg-white/80 border-white/50 text-[#0F162A]'
                 }`}>
-                    <div className="flex items-center space-x-2">
-                        <div className="bg-blue-600 text-white p-2 rounded-xl flex items-center justify-center">
-                            <Wrench className="w-6 h-6 transform -rotate-45" strokeWidth={2.5} />
+                    <div className="flex items-center space-x-2 shrink-0">
+                        <div className="hidden sm:flex bg-blue-600 text-white p-2 rounded-xl items-center justify-center">
+                            <Wrench className="w-5 h-5 transform -rotate-45" strokeWidth={2.5} />
                         </div>
-                        <span className={`text-2xl font-extrabold tracking-tight transition-colors duration-300 ${isDarkMode ? 'text-white' : 'text-[#0F162A]'}`}>{BUSINESS_NAME}</span>
+                        <span className={`text-base sm:text-xl font-black tracking-tight transition-colors duration-300 ${isDarkMode ? 'text-white' : 'text-[#0F162A]'}`}>{BUSINESS_NAME}</span>
                     </div>
 
                     <nav className={`hidden lg:flex items-center space-x-8 font-semibold text-sm transition-colors duration-300 ${isDarkMode ? 'text-slate-300' : 'text-gray-700'}`}>
@@ -358,7 +361,7 @@ export default function Demo2Page() {
                         <a href="#contact" className="hover:text-blue-500 transition-colors">Contact</a>
                     </nav>
 
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
                         <button
                             onClick={() => setIsDarkMode(!isDarkMode)}
                             className={`p-2.5 rounded-full border transition-colors flex items-center justify-center pointer-events-auto ${
@@ -368,20 +371,48 @@ export default function Demo2Page() {
                             }`}
                             title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
                         >
-                            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                            {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                         </button>
 
-                        <div className="flex items-center space-x-3 bg-amber-400/10 px-4 py-2 rounded-full border border-amber-400/40">
-                            <div className="bg-[#F4C430] text-slate-950 p-2 rounded-full flex items-center justify-center shadow-sm">
-                                <Phone className="w-4 h-4 fill-current" />
-                            </div>
-                            <div>
-                                <p className="text-[10px] uppercase text-gray-500 font-bold tracking-widest leading-none">Call Or Chat</p>
-                                <p className={`text-sm font-extrabold tracking-tight transition-colors duration-300 ${isDarkMode ? 'text-white' : 'text-[#0F162A]'}`}>{CONTACT_PHONE}</p>
-                            </div>
-                        </div>
+                        <a
+                            href={`tel:${CONTACT_PHONE}`}
+                            className="flex items-center justify-center bg-[#F4C430] hover:bg-amber-500 text-slate-950 p-2.5 sm:px-4 sm:py-2.5 rounded-full shadow-sm transition-colors pointer-events-auto shrink-0 gap-2 border border-amber-400/20"
+                            title="Call Support Now"
+                        >
+                            <Phone className="w-4 h-4 fill-current shrink-0" />
+                            <span className="hidden sm:block text-xs font-black uppercase tracking-wider">{CONTACT_PHONE}</span>
+                        </a>
+
+                        {/* Hamburger Button for Mobile Navigation */}
+                        <button
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            className={`p-2.5 rounded-full border transition-colors flex lg:hidden items-center justify-center pointer-events-auto ${
+                                isDarkMode
+                                    ? 'bg-slate-800 border-slate-700 text-white hover:bg-slate-700'
+                                    : 'bg-slate-100 border-gray-200 text-gray-700 hover:bg-slate-200'
+                            }`}
+                            title="Toggle Menu"
+                        >
+                            {menuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                        </button>
                     </div>
                 </header>
+
+                {/* Mobile Dropdown Menu Drawer */}
+                <div className={`absolute top-full left-4 right-4 mt-2 p-6 rounded-[2rem] border shadow-xl flex flex-col space-y-4 pointer-events-auto transition-all duration-300 ease-in-out origin-top z-50 ${
+                    isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-gray-200 text-slate-950'
+                } ${
+                    menuOpen
+                        ? 'opacity-100 translate-y-0 scale-100 visible'
+                        : 'opacity-0 -translate-y-4 scale-95 invisible pointer-events-none'
+                }`}>
+                    <a href="#home" onClick={() => setMenuOpen(false)} className="font-extrabold text-sm uppercase tracking-wide hover:text-blue-500 transition-colors">Home</a>
+                    <a href="#about" onClick={() => setMenuOpen(false)} className="font-extrabold text-sm uppercase tracking-wide hover:text-blue-500 transition-colors">About</a>
+                    <a href="#services" onClick={() => setMenuOpen(false)} className="font-extrabold text-sm uppercase tracking-wide hover:text-blue-500 transition-colors">Services</a>
+                    <a href="#faq" onClick={() => setMenuOpen(false)} className="font-extrabold text-sm uppercase tracking-wide hover:text-blue-500 transition-colors">FAQs</a>
+                    <a href="#testimonials" onClick={() => setMenuOpen(false)} className="font-extrabold text-sm uppercase tracking-wide hover:text-blue-500 transition-colors">Testimonials</a>
+                    <a href="#contact" onClick={() => setMenuOpen(false)} className="font-extrabold text-sm uppercase tracking-wide hover:text-blue-500 transition-colors">Contact</a>
+                </div>
             </div>
 
             {/* SECTION 1: MASTER HERO CONTAINER WITH FULL HEADER & ICON PATTERNS */}
@@ -573,7 +604,7 @@ export default function Demo2Page() {
 
                         <div className="sm:col-span-5 flex flex-col justify-between gap-6">
                             {/* Dynamic Branding Round Circular Rotating Badge */}
-                            <div className="relative w-full aspect-square bg-blue-600 rounded-full flex flex-center items-center justify-center text-white text-center p-6 shadow-xl shadow-blue-600/20 overflow-hidden group parallax-element" data-parallax-speed="-0.08">
+                            <div className="relative w-full max-w-[280px] mx-auto aspect-square bg-blue-600 rounded-full flex flex-col items-center justify-center text-white text-center p-6 shadow-xl shadow-blue-600/20 overflow-hidden group parallax-element" data-parallax-speed="-0.08">
                                 <div className="absolute inset-0 border-4 border-dashed border-white/20 rounded-full animate-spin" style={{ animationDuration: '40s' }}></div>
                                 <div className="relative z-10 flex flex-col items-center justify-center">
                                     <ArrowUpRight className="w-10 h-10 mb-2 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
