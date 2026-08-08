@@ -212,7 +212,7 @@ export default function Demo5Dynamic({
       name: "Maria C.",
       role: "Residential Client",
       rating: 5,
-      text: "Fitted our entire new bathroom suite. The aesthetic detailing is incredible, pipes are neat, and they even tidied up everything. Very premium customer experience!",
+      text: "Fitted our entire new bathroom suite. The aesthetic detailing is incredible, pipes are neat, and they even tidied up everything. Very  customer experience!",
       avatar: "avatar3.png"
     }
   ];
@@ -306,7 +306,7 @@ export default function Demo5Dynamic({
       className={`min-h-screen md:h-screen w-full transition-colors duration-700 ease-in-out ${isDarkMode ? "bg-[#090d16] text-[#e2e8f0] select-none" : "bg-[#f8fafc] text-[#0f172a] select-none"
         } md:snap-y md:snap-mandatory md:overflow-y-scroll scroll-smooth`}
     >
-      {/* 1. PREMIUM GLASSMORPHIC HEADER */}
+      {/* 1.  GLASSMORPHIC HEADER */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isDarkMode
           ? "bg-[#090d16]/75 border-b border-slate-800/40 backdrop-blur-md"
@@ -397,7 +397,7 @@ export default function Demo5Dynamic({
           }}
         />
         {/* Outlined backdrop texts for parallax */}
-        <div
+          <div
           className={`absolute left-10 font-black text-[12vw] pointer-events-none select-none tracking-tighter transition-colors duration-500 leading-none ${isDarkMode ? "text-slate-800/[0.6]" : "text-slate-900/[0.1]"
             }`}
           style={{
@@ -405,7 +405,7 @@ export default function Demo5Dynamic({
             transform: `translateX(${scrollY * 0.15}px)`
           }}
         >
-          {initials ? initials.length < 1 ? initials : BRAND_NAME : "FM"}
+          {(BRAND_NAME.split(" ").length >= 2 ? BRAND_NAME.split(" ")[0] : BRAND_NAME).toUpperCase()}
         </div>
         <div
           className={`absolute right-10 font-black text-[10vw] pointer-events-none select-none tracking-tighter transition-colors duration-500 leading-none ${isDarkMode ? "text-slate-800/[0.6]" : "text-slate-900/[0.1]"
@@ -415,10 +415,10 @@ export default function Demo5Dynamic({
             transform: `translateX(${scrollY * -0.1}px)`
           }}
         >
-          PREMIUM
+          {(BRAND_NAME.split(" ").length >= 2 ? BRAND_NAME.split(" ")[1] : "PREMIUM").toUpperCase()}
         </div>
       </div>
-
+        
       {/* SECTION 1: HERO (SNAP START) */}
       <section
         id="hero"
